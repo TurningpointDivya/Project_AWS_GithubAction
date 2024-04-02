@@ -46,18 +46,17 @@ jobs:
           docker buildx build  -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_BACKEND_IMAGE:latest --push .
           echo "::set-output name=image::975049941899.dkr.ecr.us-east-1.amazonaws.com/ai-voice-assistant-backend/$ECR_BACKEND_IMAGE:latest"
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def-1
+      - name: Render Task Definition
+        id: render_task_definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
             task-definition: .github/workflows/td.json
             container-name: ${{ vars.Container_Name }}
             image: ${{ steps.build-image.outputs.image }}
   
-
       - name: Deploy to ECS
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment --container-name private-container
-          task-definition: ${{ steps.task-def-1.outputs.task-definition }}
+          task-definition: ${{ steps.render_task_definition.outputs.task-definition }}
           wait-for-service-stability: true 
