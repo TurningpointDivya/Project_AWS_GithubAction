@@ -66,12 +66,12 @@ jobs:
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment
+          #args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
+        with:
           task-definition: ${{ steps.task-def-1.outputs.task-definition }}
           service:  ${{ vars.ECS_BACKEND_SERVICE }}
           cluster:  ${{ vars.ECS_CLUSTER }}
