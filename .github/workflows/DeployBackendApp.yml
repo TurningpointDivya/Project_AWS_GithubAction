@@ -22,16 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      #- name: Set up QEMU for arm64
-      #  run: |
-        #  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      #  if: runner.os == 'Linux'
-
-      #- name: Set up Docker for arm64
-       # uses: docker/setup-qemu-action@v2
-       # with:
-       #   platforms: linux/arm64
-
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
@@ -59,20 +49,14 @@ jobs:
         id: task-def-1
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-            task-definition: .github/workflows/td.json
+            task-definition: td.json
             container-name: private-container
             image: ${{ steps.build-image.outputs.image }}
   
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-render-task-definition@v1
-          #args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment
-        #env:
-         # AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID }}
-          #AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY }}
-          #AWS_DEFAULT_REGION: "us-east-1"
         with:
+          args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment
           task-definition: ${{ steps.task-def-1.outputs.task-definition }}
-          service:  ${{ vars.ECS_BACKEND_SERVICE }}
-          cluster:  ${{ vars.ECS_CLUSTER }}
-          wait-for-service-stability: false 
+          wait-for-service-stability: true 
