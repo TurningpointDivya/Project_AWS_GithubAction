@@ -61,7 +61,7 @@ jobs:
          # cluster: my-cluster  
          # wait-for-service-stability: true 
       - name: Deploy to ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: imehedi/actions-awscli-v2@latest
         with:
            args: ecs update-service --cluster my-cluster --service public_ecs_service" --force-new-deployment
         env:
