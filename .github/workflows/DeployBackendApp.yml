@@ -49,7 +49,7 @@ jobs:
         id: task-def-1
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-            task-definition: td.json
+            task-definition: .github/workflows/td.json
             container-name: private-container
             image: ${{ steps.build-image.outputs.image }}
   
