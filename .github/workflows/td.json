@@ -1,0 +1,55 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:975049941899:task-definition/private-task",
+    "containerDefinitions": [
+        {
+            "name": "private-container",
+            "image": "975049941899.dkr.ecr.us-east-1.amazonaws.com/ai-voice-assistant-backend:latest",
+            "cpu": 256,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "systemControls": []
+        }
+    ],
+    "family": "private-task",
+    "executionRoleArn": "arn:aws:iam::975049941899:role/ecs-role",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "registeredAt": "2024-04-02T02:50:29.214Z",
+    "registeredBy": "arn:aws:iam::975049941899:user/user1",
+    "tags": []
+}
