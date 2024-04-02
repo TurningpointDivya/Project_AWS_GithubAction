@@ -13,6 +13,7 @@ env:
   AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
   ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
   ECS_BACKEND_SERVICE: ${{ vars.ECS_BACKEND_SERVICE }}
+  Container-Name: ${{ vars.Container_Name }}
   #ECS_TD: .github/workflows/td.json
 jobs:
   deploy:
@@ -50,7 +51,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
             task-definition: .github/workflows/td.json
-            container-name: private-container
+            container-name: ${{ vars.Container_Name }}
             image: ${{ steps.build-image.outputs.image }}
   
 
