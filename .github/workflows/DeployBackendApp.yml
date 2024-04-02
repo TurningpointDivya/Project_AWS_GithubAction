@@ -57,6 +57,8 @@ jobs:
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment --container-name private-container
+          #args: ecs update-service --cluster my-cluster --service private-ecs-service --force-new-deployment --container-name private-container
           task-definition: ${{ steps.render_task_definition.outputs.task-definition }}
+          service: private-ecs-service  # Update with your ECS service name
+          cluster: my-cluster  
           wait-for-service-stability: true 
