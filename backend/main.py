@@ -10,7 +10,7 @@ app = FastAPI()
 
 @app.get("/")
 def root_route():
-    return {"Hello": "Hello World from Mpcsj - Runapp"}
+    return {"Hello": "Hello World from Mpcsj - Run9"}
 
 
 origins = [
